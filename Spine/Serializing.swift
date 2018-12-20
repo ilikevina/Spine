@@ -99,12 +99,12 @@ public class Serializer {
 	public func serializeLinkData(_ resource: Resource?) throws -> Data {
 		let payloadData: Any
 		
-		if let resource = resource {
-			assert(resource.id != nil, "Attempt to convert resource without id to linkage. Only resources with ids can be converted to linkage.")
-			payloadData = ["type": resource.resourceType, "id": resource.id!]
-		} else {
-			payloadData = NSNull()
-		}
+        if let resource = resource, resource.id != nil {
+            //            assert(resource.id != nil, "Attempt to convert resource without id to linkage. Only resources with ids can be converted to linkage.")
+            payloadData = ["type": resource.resourceType, "id": resource.id!]
+        } else {
+            payloadData = NSNull()
+        }
 		
 		do {
 			return try JSONSerialization.data(withJSONObject: ["data": payloadData], options: JSONSerialization.WritingOptions(rawValue: 0))
